@@ -24,12 +24,17 @@ const questions = [
   {
     type: "input",
     name: "badges",
-    message: "What technology did you use in this project"
+    message: "What technology did you use in this project(separate multiple answers with a comma and space)"
   },
   {
     type: "input",
     name: "installation",
     message: "How do users install your app?"
+  },
+  {
+    type: "input",
+    name: "link",
+    message: "Enter the link to your live app:"
   },
   {
     type: "input",
@@ -48,8 +53,13 @@ const questions = [
   },
   {
     type: "input",
-    name: "credits",
-    message: "Who else worked on this (enter github username), did you use any third party apps or videos?"
+    name: "userCredits",
+    message: "Who else worked on this (enter github username)?"
+  },
+  {
+    type: "input",
+    name: "techCredits",
+    message: "What kind of third party libraries did you use?"
   },
   {
     type: "input",
@@ -59,21 +69,55 @@ const questions = [
 
 ];
 
+// DATA MODEL
+function Data(options) {
+  this.defaults = {
+    title: "Project Title",
+    description: "This is a default description for my awesome project, I must have forgot to fill it in when I was generating my README!",
+    badges: {
+      label: "awesome",
+      message: "100%",
+      color: "color"
+    },
+    installation: "No complicated installation for this project, just use the link to the live page.",
+    link: "",
+    usage: "This project is so easy to use I didn't include any other instructions.",
+    contributing: "",
+    tests: "",
+    userCredits: "",
+    techCredits: "",
+    license: "MIT License"
+  },
+  Object.keys(this.defaults).forEach(key => this[key]= options[key] || this.defaults[key]); 
+
+    
+}
+
 function writeToFile(fileName, data) {
 
 }
 
 async function init() {
+  // GET USER INPUTS
   const answers = await inquirer.prompt(questions);
-  const user = await api.getUser(answers.username);
-  const data = {
-    user,
+  // console.log(answers);
+  // CONSTRUCT DATA FROM INPUTS
+  const data = new Data({
     title: answers.title,
-  };
+    description: answers.description,
+    badges: answers.badges.split(', '),
+    installation: answers.installation,
+    link: answers.link,
+    usage: answers.usage,
+    contributing: answers.contributing,
+    tests: answers.tests,
+    userCredits: answers.userCredits.split(', '),
+    techCredits: answers.techCredits.split(', '),
+    license: answers.license
+  });
+  data.user = await api.getUser(answers.username);
   // console.log(data);
-  const content = generateMarkdown(data);
-
-  writeToFile("README", content);
+  writeToFile("README", markdown(data));
 }
 
 init();

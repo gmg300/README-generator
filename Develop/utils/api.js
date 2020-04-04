@@ -15,10 +15,13 @@ const api = {
     return axios
       .get(queryURL, config)
       .then(function(res) {
+        // console.log(res.data);
         const userData = {
           name: res.data.name,
+          login: res.data.login,
           profileImg: res.data.avatar_url,
-          email: res.data.email
+          email: res.data.email,
+          website: res.data.blog
         };
         return userData;
       })
