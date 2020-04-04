@@ -11,19 +11,29 @@ const questions = [
     name: "username",
     message: "Enter a Github username:"
   },
-  // {
-  //   type: "input",
-  //   name: "title",
-  //   message: "Project Title:"
-  // }
+  {
+    type: "input",
+    name: "title",
+    message: "Project Title:"
+  }
 ];
 
 function writeToFile(fileName, data) {}
 
 async function init() {
   const answers = await inquirer.prompt(questions);
-  const userData = await api.getUser(answers.username);
-  console.log(userData);
+  const user = await api.getUser(answers.username);
+  const data = {
+    user,
+    title: answers.title,
+  };
+  // console.log(data);
+  generateMarkdown(data);
+
+
+
+  
+  
 
   
 

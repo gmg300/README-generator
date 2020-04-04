@@ -15,7 +15,12 @@ const api = {
     return axios
       .get(queryURL, config)
       .then(function(res) {
-        return res.data;
+        const userData = {
+          name: res.data.name,
+          profileImg: res.data.avatar_url,
+          email: res.data.email
+        };
+        return userData;
       })
       .catch(err => {
         console.log(err);

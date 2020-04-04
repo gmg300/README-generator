@@ -17,6 +17,8 @@ function generateMarkdown(data) {
   ## Tests
   
   ## Questions
+  ${data.user.profileImg}
+  ${data.user.email}
 
 `;
 }
