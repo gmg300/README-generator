@@ -1,6 +1,6 @@
 function generateMarkdown(data) {
   return `
-  # ${data.title}
+  # Project Title
 
   ## Description
   
@@ -16,9 +16,12 @@ function generateMarkdown(data) {
   
   ## Tests
   
-  ## Questions
-  ${data.user.profileImg}
-  ${data.user.email}
+  ## Questions  
+    For questions or feedback email me at garrettgassensmith@gmail.com
+
+    ![Garrett Gassensmith](test.jpg)
+      Format: ![Photo of Garrett]()
+  
 
 `;
 }

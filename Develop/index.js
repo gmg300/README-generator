@@ -18,7 +18,9 @@ const questions = [
   }
 ];
 
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+  
+}
 
 async function init() {
   const answers = await inquirer.prompt(questions);
@@ -28,7 +30,7 @@ async function init() {
     title: answers.title,
   };
   // console.log(data);
-  generateMarkdown(data);
+  const content = generateMarkdown(data);
 
 
 
