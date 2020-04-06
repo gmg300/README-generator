@@ -1,5 +1,5 @@
 
-  # Shaker
+  # Project Title
 
 
   ## Description
@@ -17,7 +17,7 @@
   
   
   ## Installation
-   [Shaker]()
+   [Project Title]()
   
   
   ## Usage
@@ -39,7 +39,7 @@
   * Mohmed
   
 
-  [![JQuery](https://img.shields.io/badge/Made%20with-JQuery-blue.svg)]()  [![Lodash](https://img.shields.io/badge/Made%20with-Lodash-orange.svg)]()  [![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-ff69b4.svg)]()  [![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-undefined.svg)]()  
+  [![JQuery](https://img.shields.io/badge/Made%20with-JQuery-ff69b4.svg)]()  [![Lodash](https://img.shields.io/badge/Made%20with-Lodash-undefined.svg)]()  [![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-orange.svg)]()  [![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-ff69b4.svg)]()  
   
   
   ## License
