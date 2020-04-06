@@ -1,22 +1,31 @@
 // LOAD NODE PACKAGES
 const fs = require("fs");
 const inquirer = require("inquirer");
-const moment = require("moment");
 const api = require("./utils/api");
 const generateMarkdown = require("./utils/generateMarkdown");
 
 // QUESTIONS ARRAY
+// https://github.com/sameeri/Code-Inquirer/wiki/Asking-questions-away-with-Inquirer!
 const questions = [
   {
     type: "input",
-    name: "username",
-    message: "Enter a Github username:"
+    name: "user",
+    message: "Enter a Github username:",
+    validate: function validateUsername(input) {
+      return input !== "";
+    },
+    filter: async function(input) {
+      let user = await api.getUser(input);
+      return user;
+    }
   },
   {
     type: "input",
     name: "title",
     message: "Project Title:",
-    default: "Project Title"
+    validate: function validateTitle(input) {
+      return input !== "";
+    }
   },
   {
     type: "input",
@@ -58,49 +67,61 @@ const questions = [
   {
     type: "input",
     name: "userCredits",
-    message: "Who else worked on this (enter github usernames)?",
+    message:
+      "List Github usernames for other contributors(separate with commas):",
     default: "",
     filter: function(input) {
-      const users = input.split(", ");
-      let credits = ``;
-      users.forEach(user => {
-        user = encodeURIComponent(user.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
-        credits += `* ${user}\n  `;
-      });
-      return credits;
+      // Clean input string, turn into array, turn into URL encoded .md bullet points
+      if (input.trim() === "") {
+        return "";
+      } else {
+        const users = input.split(", ");
+        let credits = ``;
+        users.forEach(user => {
+          user = encodeURIComponent(user.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+          credits += `* ${user}\n  `;
+        });
+        return credits;
+      }
     }
   },
   {
     type: "input",
     name: "techCredits",
-    message: "What third party libraries and APIs did you use?",
+    message:
+      "List third-party libraries or APIs this project used(separate with commas):",
     default: "",
     filter: function(input) {
-      const techs = input.split(", ");
-      const colors = [
-        "brightgreen",
-        "green",
-        "yellowgreen",
-        "yellow",
-        "orange",
-        "red",
-        "blue",
-        "blueviolet",
-        "ff69b4"
-      ];
-      let credits = ``;
-      techs.forEach(tech => {
-        tech = encodeURIComponent(tech.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
-        let color = colors[Math.floor(Math.random() * colors.length + 1)];
-        credits += `[![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)]()  `;
-      });
-      return credits;
+      // Clean input string, turn into array, turn into URL encoded items, get random color, create badge from input
+      if (input.trim() === "") {
+        return "";
+      } else {
+        const techs = input.split(", ");
+        const colors = [
+          "brightgreen",
+          "green",
+          "yellowgreen",
+          "yellow",
+          "orange",
+          "red",
+          "blue",
+          "blueviolet",
+          "ff69b4"
+        ];
+        let credits = ``;
+        techs.forEach(tech => {
+          tech = encodeURIComponent(tech.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+          let color = colors[Math.floor(Math.random() * colors.length + 1)];
+          credits += `[![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)]()  `;
+        });
+        return credits;
+      }
     }
   },
   {
     type: "list",
     name: "license",
-    message: "How would you like to license your project?",
+    message: "Choose a license:",
     choices: [
       "MIT",
       "Apache 2.0",
@@ -117,6 +138,8 @@ const questions = [
     ],
     default: "MIT",
     filter: function(input) {
+      // Find Badge with link based on user license choice
+      // https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
       switch (input) {
         case "MIT":
           return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
@@ -151,26 +174,18 @@ function writeToFile(fileName, data) {
   fs.writeFileSync(fileName, data);
 }
 
-async function init() {
+function init() {
   // GET USER INPUTS
-  const answers = await inquirer.prompt(questions);
-  // CONSTRUCT DATA FROM INPUTS
-  const data = {
-    title: answers.title,
-    description: answers.description,
-    installation: answers.installation,
-    link: answers.link,
-    usage: answers.usage,
-    contributing: answers.contributing,
-    tests: answers.tests,
-    userCredits: answers.userCredits,
-    techCredits: answers.techCredits,
-    license: answers.license,
-    year: moment().format("YYYY")
-  };
-  data.user = await api.getUser(answers.username);
-  writeToFile("README.md", generateMarkdown(data));
-  console.log("Created file 'README.md'");
+  inquirer
+  .prompt(questions)
+  .then(answers => {
+    answers.user = JSON.parse(answers.user);
+    writeToFile("README.md", generateMarkdown(answers));
+    console.log("Created file 'README.md'");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
 init();

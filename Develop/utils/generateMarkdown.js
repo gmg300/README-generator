@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 function generateMarkdown(data) {
   // console.log(data);
   return `
@@ -42,8 +44,8 @@ function generateMarkdown(data) {
   
   
   ## License
-  Copyright &copy;${data.year} ${data.user.name}  
-  
+  Copyright &copy;${moment().format("YYYY")} ${data.user.name}  
+
   ${data.license}
   
   

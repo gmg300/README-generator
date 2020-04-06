@@ -23,7 +23,7 @@ const api = {
           profileImg: res.data.avatar_url,
           email: res.data.email
         };
-        return user;
+        return JSON.stringify(user);
       })
       .catch(err => {
         console.log(err);

@@ -1,5 +1,5 @@
 
-  # Project Title
+  # Shaker
 
 
   ## Description
@@ -17,7 +17,7 @@
   
   
   ## Installation
-   [Project Title]()
+   [Shaker]()
   
   
   ## Usage
@@ -34,17 +34,14 @@
 
   ## Credits
   * [gmg300](https://github.com/gmg300)
-  * StrongMarc
-  * Herson
-  * Mohmed
   
 
-  [![JQuery](https://img.shields.io/badge/Made%20with-JQuery-ff69b4.svg)]()  [![Lodash](https://img.shields.io/badge/Made%20with-Lodash-undefined.svg)]()  [![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-orange.svg)]()  [![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-ff69b4.svg)]()  
+  
   
   
   ## License
   Copyright &copy;2020 Garrett Gassensmith  
-  
+
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   
   
