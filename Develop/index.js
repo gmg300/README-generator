@@ -2,7 +2,7 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const api = require("./utils/api");
-const markdown = require("./utils/generateMarkdown");
+const generateMarkdown = require("./utils/generateMarkdown");
 
 // SET QUESTIONS
 const questions = [
@@ -20,11 +20,6 @@ const questions = [
     type: "input",
     name: "description",
     message: "Enter a description for your project:"
-  },
-  {
-    type: "input",
-    name: "badges",
-    message: "What technology did you use in this project(separate multiple answers with a comma and space)"
   },
   {
     type: "input",
@@ -94,7 +89,7 @@ function Data(options) {
 }
 
 function writeToFile(fileName, data) {
-
+  fs.writeFileSync(fileName, data);
 }
 
 async function init() {
@@ -105,7 +100,6 @@ async function init() {
   const data = new Data({
     title: answers.title,
     description: answers.description,
-    badges: answers.badges.split(', '),
     installation: answers.installation,
     link: answers.link,
     usage: answers.usage,
@@ -117,7 +111,9 @@ async function init() {
   });
   data.user = await api.getUser(answers.username);
   // console.log(data);
-  writeToFile("README", markdown(data));
+  const md = generateMarkdown(data);
+  writeToFile("README.md", md);
+
 }
 
 init();

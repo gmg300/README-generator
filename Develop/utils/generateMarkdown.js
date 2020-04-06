@@ -8,11 +8,6 @@ function generateMarkdown(data) {
   
   ${data.description}  
   
-
-  ## Badges
-  
-  ![badge](https://img.shields.io/badge/${data.badges.label}-${data.badges.message}-c${data.badges.color})
-  
   
   ## Table of Contents
   
@@ -58,7 +53,7 @@ function generateMarkdown(data) {
   
   ## Questions
   
-  <img alt="Photo of ${data.user.name}" src="${data.user.profileImg}" width="50%">
+  <img alt="Photo of ${data.user.name}" src="${data.user.profileImg}" width="25%">
   
   For questions or feedback email me at ${data.user.email}  
 `;
