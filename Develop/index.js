@@ -15,74 +15,65 @@ const questions = [
   {
     type: "input",
     name: "title",
-    message: "Project Title:"
+    message: "Project Title:",
+    default: "Project Title"
   },
   {
     type: "input",
     name: "description",
-    message: "Enter a description for your project:"
+    message: "Project Description:",
+    default: "This is a default description for my awesome project!"
   },
   {
     type: "input",
     name: "installation",
-    message: "How do users install your app?"
+    message: "Installation instructions:",
+    default: ""
   },
   {
     type: "input",
     name: "link",
-    message: "Enter the link to your live app:"
+    message: "Link to live app:",
+    default: ""
   },
   {
     type: "input",
     name: "usage",
-    message: "How does your app work?"
+    message: "Usage instructions:",
+    default: "This project is so easy to use I didn't include any other instructions."
   },
   {
     type: "input",
     name: "contributing",
-    message: "How can others contribute to your project?"
+    message: "Contributing instructions:",
+    default: "Feel free to fork and edit to your hearts content."
   },
   {
     type: "input",
     name: "tests",
-    message: "Can you describe any tests run for this project?"
+    message: "Tests run for the project:",
+    default: "There are no test written for the app at this time."
   },
   {
     type: "input",
     name: "userCredits",
-    message: "Who else worked on this (enter github username)?"
+    message: "Who else worked on this (enter github usernames)?",
+    default: ""
   },
   {
     type: "input",
     name: "techCredits",
-    message: "What kind of third party libraries did you use?"
+    message: "What third party libraries and APIs did you use?",
+    default: ""
   },
   {
     type: "list",
     name: "license",
     message: "How would you like to license your project?",
-    choices: ["MIT", "Apache 2.0", "GNU GPLv3", "GNU GPLv2", "GNU LGPLv2.1", "BSD 3-Clause", "BSD 2-Clause", "Eclipse Public License 1.0", "ISC", "Mozilla Public License 2.0", "IBM Public License Version 1.0", "The Unlicense"]
+    choices: ["MIT", "Apache 2.0", "GNU GPLv3", "GNU GPLv2", "GNU LGPLv2.1", "BSD 3-Clause", "BSD 2-Clause", "Eclipse Public License 1.0", "ISC", "Mozilla Public License 2.0", "IBM Public License Version 1.0", "The Unlicense"],
+    default: "MIT"
   }
 ];
-
-// DATA MODEL
-function Data(options) {
-  this.defaults = {
-    title: "Project Title",
-    description: "This is a default description for my awesome project!",
-    installation: "Use the link to the live page: ",
-    link: "",
-    usage: "This project is so easy to use I didn't include any other instructions.",
-    contributing: "Feel free to fork and edit to your hearts content.",
-    tests: "There are no test written for the app at this time.",
-    userCredits: "",
-    techCredits: "",
-    license: "MIT"
-  },
-  Object.keys(this.defaults).forEach(key => this[key]= options[key] || this.defaults[key]); 
-
-    
-}
 
 function writeToFile(fileName, data) {
   fs.writeFileSync(fileName, data);
@@ -140,7 +131,7 @@ async function init() {
     return credits; 
   };
   // CONSTRUCT DATA FROM INPUTS
-  const data = new Data({
+  const data = {
     title: answers.title,
     description: answers.description,
     installation: answers.installation,
@@ -150,10 +141,10 @@ async function init() {
     tests: answers.tests,
     userCredits: userCredits(answers),
     techCredits: techCredits(answers),
-    license: licenseBadge(answers)
-  });
+    license: licenseBadge(answers),
+    year: moment().format('YYYY')
+  };
   data.user = await api.getUser(answers.username);
-  data.year = moment().format('YYYY');
   writeToFile("README.md", generateMarkdown(data));
   console.log("Created file 'README.md'");
 }

@@ -17,7 +17,7 @@
   
   
   ## Installation
-  Use the link to the live page:  [Shaker]()
+   [Shaker]()
   
   
   ## Usage
@@ -29,21 +29,22 @@
   
   
   ## Tests
-  There are no test written for the this app at this time.
+  There are no test written for the app at this time.
   
 
   ## Credits
   * [gmg300](https://github.com/gmg300)
   * StrongMarc
-  * hussainvaid
-  * hrodriguez21
+  * Herson
+  * Mohmed
   
 
-  [![JQuery](https://img.shields.io/badge/Made%20with-JQuery-undefined.svg)]()  [![Lodash](https://img.shields.io/badge/Made%20with-Lodash-undefined.svg)]()  [![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-green.svg)]()  [![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-orange.svg)]()  
+  [![JQuery](https://img.shields.io/badge/Made%20with-JQuery-blue.svg)]()  [![Lodash](https://img.shields.io/badge/Made%20with-Lodash-orange.svg)]()  [![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-ff69b4.svg)]()  [![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-undefined.svg)]()  
   
   
   ## License
-  Copyright &copy;2020 Garrett Gassensmith
+  Copyright &copy;2020 Garrett Gassensmith  
+  
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   
   

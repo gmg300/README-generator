@@ -16,14 +16,14 @@ const api = {
       .get(queryURL, config)
       .then(function(res) {
         // console.log(res.data);
-        const userData = {
+        const user = {
           name: res.data.name,
           login: res.data.login,
           profile: res.data.html_url,
           profileImg: res.data.avatar_url,
           email: res.data.email
         };
-        return userData;
+        return user;
       })
       .catch(err => {
         console.log(err);
