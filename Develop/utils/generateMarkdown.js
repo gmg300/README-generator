@@ -5,12 +5,10 @@ function generateMarkdown(data) {
 
 
   ## Description
-  
   ${data.description}  
   
   
   ## Table of Contents
-  
   * [Installation](#installation)
   * [Usage](#usage)
   * [Contributing](#contributing)
@@ -21,22 +19,18 @@ function generateMarkdown(data) {
   
   
   ## Installation
-  
   ${data.installation} [${data.title}](${data.link})
   
   
   ## Usage
-  
   ${data.usage}
   
   
   ## Contributing
-  
   ${data.contributing}
   
   
   ## Tests
-  
   ${data.tests}
   
 
@@ -47,12 +41,10 @@ function generateMarkdown(data) {
   
   
   ## License
-  
   ${data.license}
   
   
   ## Questions
-  
   <img alt="Photo of ${data.user.name}" src="${data.user.profileImg}" width="25%">
   
   For questions or feedback email me at ${data.user.email}  
