@@ -1,5 +1,5 @@
 function generateMarkdown(data) {
-  console.log(data);
+  // console.log(data);
   return `
   # ${data.title}
 
@@ -35,12 +35,15 @@ function generateMarkdown(data) {
   
 
   ## Credits
-  * [${data.user.login}](${data.user.website})
-  * ${data.userCredits}
-  * ${data.techCredits}
+  * [${data.user.login}](${data.user.profile})
+  ${data.userCredits}
+
+  ${data.techCredits}
   
   
   ## License
+  Copyright &copy;${data.year} ${data.user.name}  
+  
   ${data.license}
   
   

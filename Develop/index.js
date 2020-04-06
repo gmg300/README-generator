@@ -1,6 +1,7 @@
 // LOAD NODE PACKAGES
 const fs = require("fs");
 const inquirer = require("inquirer");
+const moment = require("moment");
 const api = require("./utils/api");
 const generateMarkdown = require("./utils/generateMarkdown");
 
@@ -68,12 +69,12 @@ const questions = [
 function Data(options) {
   this.defaults = {
     title: "Project Title",
-    description: "This is a default description for my awesome project, I must have forgot to fill it in when I was generating my README!",
-    installation: "No complicated installation for this project, just use the link to the live page.",
+    description: "This is a default description for my awesome project!",
+    installation: "Use the link to the live page: ",
     link: "",
     usage: "This project is so easy to use I didn't include any other instructions.",
-    contributing: "",
-    tests: "",
+    contributing: "Feel free to fork and edit to your hearts content.",
+    tests: "There are no test written for the app at this time.",
     userCredits: "",
     techCredits: "",
     license: "MIT"
@@ -90,7 +91,6 @@ function writeToFile(fileName, data) {
 async function init() {
   // GET USER INPUTS
   const answers = await inquirer.prompt(questions);
-  // console.log(answers);
   const licenseBadge = function(answers) {
     switch(answers.license) {
       case "MIT":
@@ -119,6 +119,26 @@ async function init() {
         return '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)';
       }
   }
+  const userCredits = function(answers) {
+    const users = answers.userCredits.split(', ');
+    let credits = ``;
+    users.forEach(user => {
+      user = encodeURIComponent(user.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+      credits += `* ${user}\n  `;
+    });
+    return credits; 
+  };
+  const techCredits = function(answers) {
+    const techs = answers.techCredits.split(', ');
+    const colors = ['brightgreen', 'green', 'yellowgreen', 'yellow', 'orange', 'red', 'blue', 'blueviolet', 'ff69b4'];
+    let credits = ``;
+    techs.forEach(tech => {
+      tech = encodeURIComponent(tech.trim());// URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+      let color = colors[Math.floor((Math.random() * colors.length) + 1)];
+      credits += `[![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)]()  `;
+    });
+    return credits; 
+  };
   // CONSTRUCT DATA FROM INPUTS
   const data = new Data({
     title: answers.title,
@@ -128,14 +148,14 @@ async function init() {
     usage: answers.usage,
     contributing: answers.contributing,
     tests: answers.tests,
-    userCredits: answers.userCredits.split(', '),
-    techCredits: answers.techCredits.split(', '),
+    userCredits: userCredits(answers),
+    techCredits: techCredits(answers),
     license: licenseBadge(answers)
   });
   data.user = await api.getUser(answers.username);
-  // console.log(data);
-  const md = generateMarkdown(data);
-  writeToFile("README.md", md);
+  data.year = moment().format('YYYY');
+  writeToFile("README.md", generateMarkdown(data));
+  console.log("Created file 'README.md'");
 }
 
 init();

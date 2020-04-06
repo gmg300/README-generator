@@ -19,9 +19,9 @@ const api = {
         const userData = {
           name: res.data.name,
           login: res.data.login,
+          profile: res.data.html_url,
           profileImg: res.data.avatar_url,
-          email: res.data.email,
-          website: res.data.blog
+          email: res.data.email
         };
         return userData;
       })
