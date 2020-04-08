@@ -29,6 +29,8 @@
   node index.js
   ```  
   You will be prompted with a series of questions about your project, when you finish the README will automatically generate in your current folder!
+
+  <img alt="README generator usage gif" src="Develop/assets/README-generator.gif">
   
   
   ## Contributing
