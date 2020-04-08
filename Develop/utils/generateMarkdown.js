@@ -22,8 +22,6 @@ function generateMarkdown(data) {
   
   ## Installation
   ${data.installation}
-    
-  [Live link](${data.link})
   
   
   ## Usage
@@ -46,9 +44,9 @@ function generateMarkdown(data) {
   
   
   ## License
-  Copyright &copy;${moment().format("YYYY")} ${data.user.name}  
-
   ${data.license}
+
+  Copyright &copy;${moment().format("YYYY")} ${data.user.name} 
   
   
   ## Questions

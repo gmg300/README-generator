@@ -9,7 +9,6 @@ const generateMarkdown = require("./utils/generateMarkdown");
 // Validation - https://github.com/sameeri/Code-Inquirer/wiki/Asking-questions-away-with-Inquirer!
 // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
 // Filtering and general documentation - https://github.com/SBoudrias/Inquirer.js/#questions
-// Validate API response - https://gitter.im/SBoudrias/Inquirer.js?at=548940cb7ed2ba7b10c0e209
 const questions = [
   {
     type: "input",
@@ -33,12 +32,6 @@ const questions = [
   },
   {
     type: "input",
-    name: "link",
-    message: "Link to live app:",
-    default: "",
-  },
-  {
-    type: "input",
     name: "usage",
     message: "Usage instructions:",
     default:
@@ -48,13 +41,13 @@ const questions = [
     type: "input",
     name: "contributing",
     message: "Contributing instructions:",
-    default: "Fork and edit to your hearts content.",
+    default: "There are currently no guidelines for contributing, fork and edit to your hearts content.",
   },
   {
     type: "input",
     name: "tests",
     message: "Tests run for the project:",
-    default: "There are no tests for the app at this time.",
+    default: "There are currently no tests for this app.",
   },
   {
     type: "input",
@@ -84,7 +77,7 @@ const questions = [
       "List third-party libraries or APIs this project used(separate with commas):",
     default: "",
     filter: function (input) {
-      // Clean input string, turn into array, turn into URL encoded items, get random color, create badge from input
+      // Clean input string, turn into array, turn into URL encoded items, get random color, create badge from input and color
       if (input.trim() === "") {
         return "";
       } else {
@@ -168,20 +161,22 @@ function writeToFile(fileName, data) {
 }
 
 async function init() {
-  // GET USERNAME AND GITHUB DATA
-  // GET OTHER ANSWERS
-  // https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
+  // Async/Await - https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
   const input = async () => {
     try {
       let userData;
+      // If api req returns error ask again
       while (userData == undefined) {
+        // Get Github username
         const user = await inquirer.prompt({
           type: "input",
           name: "name",
           message: "Enter a Github username:",
         });
+        // Query api and get user data 
         userData = await api.getUser(user.name);
       }
+      // Get README details
       const answers = await inquirer.prompt(questions);
       answers.user = userData;
       return answers;
