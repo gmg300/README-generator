@@ -171,7 +171,7 @@ async function init() {
   // GET USERNAME AND GITHUB DATA
   // GET OTHER ANSWERS
   // https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
-  const data = async () => {
+  const input = async () => {
     try {
       let userData;
       while (userData == undefined) {
@@ -189,9 +189,9 @@ async function init() {
       console.log(chalk.red("Error"));
     }
   };
-  let a = await data();
-  console.log(a);
-  // writeToFile("README.md", generateMarkdown(data));
+  const data = await input();
+  // console.log(data);
+  writeToFile("README.md", generateMarkdown(data));
 }
 
 init();
