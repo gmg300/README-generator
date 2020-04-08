@@ -97,7 +97,7 @@ const questions = [
         techs.forEach((tech) => {
           tech = encodeURIComponent(tech.trim());
           let color = colors[Math.floor(Math.random() * colors.length + 1)];
-          credits += `[![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)]()  `;
+          credits += `![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)  `;
         });
         return credits;
       }

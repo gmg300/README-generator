@@ -45,7 +45,7 @@
   * [gmg300](https://github.com/gmg300)
   
 
-  [![inquirer](https://img.shields.io/badge/Made%20with-inquirer-yellowgreen.svg)]()  [![chalk](https://img.shields.io/badge/Made%20with-chalk-ff69b4.svg)]()  [![axios](https://img.shields.io/badge/Made%20with-axios-blue.svg)]()  [![dotenv](https://img.shields.io/badge/Made%20with-dotenv-blueviolet.svg)]()  [![moment](https://img.shields.io/badge/Made%20with-moment-green.svg)]()  
+  ![inquirer](https://img.shields.io/badge/Made%20with-inquirer-yellowgreen.svg)  ![chalk](https://img.shields.io/badge/Made%20with-chalk-ff69b4.svg)  ![axios](https://img.shields.io/badge/Made%20with-axios-blue.svg)  ![dotenv](https://img.shields.io/badge/Made%20with-dotenv-blueviolet.svg)  ![moment](https://img.shields.io/badge/Made%20with-moment-green.svg) 
   
   
   ## License

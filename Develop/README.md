@@ -3,7 +3,7 @@
 
 
   ## Description
-  a cocktail app
+  A cocktail app
 
   
   ## Table of Contents
@@ -39,7 +39,7 @@
   * Mohmed
   
 
-  ![Jquery](https://img.shields.io/badge/Made%20with-Jquery-red.svg)  ![Lodash](https://img.shields.io/badge/Made%20with-Lodash-red.svg) ![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-blue.svg)  ![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-undefined.svg) 
+  ![Jquery](https://img.shields.io/badge/Made%20with-Jquery-blue.svg)  ![Lodash](https://img.shields.io/badge/Made%20with-Lodash-orange.svg)  ![The%20Cocktail%20DB](https://img.shields.io/badge/Made%20with-The%20Cocktail%20DB-red.svg)  ![Google%20Maps](https://img.shields.io/badge/Made%20with-Google%20Maps-yellowgreen.svg)  
   
   
   ## License
