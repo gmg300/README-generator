@@ -1,68 +1,60 @@
 // LOAD NODE PACKAGES
 const fs = require("fs");
 const inquirer = require("inquirer");
+const chalk = require("chalk");
 const api = require("./utils/api");
 const generateMarkdown = require("./utils/generateMarkdown");
 
-// QUESTIONS ARRAY
-// https://github.com/sameeri/Code-Inquirer/wiki/Asking-questions-away-with-Inquirer!
+// QUESTIONS ARRAYS
+// Validation - https://github.com/sameeri/Code-Inquirer/wiki/Asking-questions-away-with-Inquirer!
+// URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+// Filtering and general documentation - https://github.com/SBoudrias/Inquirer.js/#questions
+// Validate API response - https://gitter.im/SBoudrias/Inquirer.js?at=548940cb7ed2ba7b10c0e209
 const questions = [
-  {
-    type: "input",
-    name: "user",
-    message: "Enter a Github username:",
-    validate: function validateUsername(input) {
-      return input !== "";
-    },
-    filter: async function(input) {
-      let user = await api.getUser(input);
-      return user;
-    }
-  },
   {
     type: "input",
     name: "title",
     message: "Project Title:",
     validate: function validateTitle(input) {
       return input !== "";
-    }
+    },
   },
   {
     type: "input",
     name: "description",
     message: "Project Description:",
-    default: "This is a default description for my awesome project!"
+    default: "This is a default description for my awesome project!",
   },
   {
     type: "input",
     name: "installation",
     message: "Installation instructions:",
-    default: ""
+    default: "",
   },
   {
     type: "input",
     name: "link",
     message: "Link to live app:",
-    default: ""
+    default: "",
   },
   {
     type: "input",
     name: "usage",
     message: "Usage instructions:",
     default:
-      "This project is so easy to use I didn't include any other instructions."
+      "This project is so easy to use I didn't include any other instructions.",
   },
   {
     type: "input",
     name: "contributing",
     message: "Contributing instructions:",
-    default: "Feel free to fork and edit to your hearts content."
+    default: "Fork and edit to your hearts content.",
   },
   {
     type: "input",
     name: "tests",
     message: "Tests run for the project:",
-    default: "There are no test written for the app at this time."
+    default: "There are no tests for the app at this time.",
   },
   {
     type: "input",
@@ -70,20 +62,20 @@ const questions = [
     message:
       "List Github usernames for other contributors(separate with commas):",
     default: "",
-    filter: function(input) {
+    filter: function (input) {
       // Clean input string, turn into array, turn into URL encoded .md bullet points
       if (input.trim() === "") {
         return "";
       } else {
         const users = input.split(", ");
         let credits = ``;
-        users.forEach(user => {
-          user = encodeURIComponent(user.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+        users.forEach((user) => {
+          user = encodeURIComponent(user.trim());
           credits += `* ${user}\n  `;
         });
         return credits;
       }
-    }
+    },
   },
   {
     type: "input",
@@ -91,7 +83,7 @@ const questions = [
     message:
       "List third-party libraries or APIs this project used(separate with commas):",
     default: "",
-    filter: function(input) {
+    filter: function (input) {
       // Clean input string, turn into array, turn into URL encoded items, get random color, create badge from input
       if (input.trim() === "") {
         return "";
@@ -106,17 +98,17 @@ const questions = [
           "red",
           "blue",
           "blueviolet",
-          "ff69b4"
+          "ff69b4",
         ];
         let credits = ``;
-        techs.forEach(tech => {
-          tech = encodeURIComponent(tech.trim()); // URL encoding - https://stackoverflow.com/questions/12141251/how-can-i-replace-space-with-20-in-javascript
+        techs.forEach((tech) => {
+          tech = encodeURIComponent(tech.trim());
           let color = colors[Math.floor(Math.random() * colors.length + 1)];
           credits += `[![${tech}](https://img.shields.io/badge/Made%20with-${tech}-${color}.svg)]()  `;
         });
         return credits;
       }
-    }
+    },
   },
   {
     type: "list",
@@ -134,12 +126,12 @@ const questions = [
       "ISC",
       "Mozilla Public License 2.0",
       "IBM Public License Version 1.0",
-      "The Unlicense"
+      "The Unlicense",
     ],
     default: "MIT",
-    filter: function(input) {
+    filter: function (input) {
       // Find Badge with link based on user license choice
-      // https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+      // Badges - https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
       switch (input) {
         case "MIT":
           return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
@@ -166,26 +158,40 @@ const questions = [
         default:
           return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
       }
-    }
-  }
+    },
+  },
 ];
 
 function writeToFile(fileName, data) {
   fs.writeFileSync(fileName, data);
+  console.log(chalk.green("Created file 'README.md'"));
 }
 
-function init() {
-  // GET USER INPUTS
-  inquirer
-  .prompt(questions)
-  .then(answers => {
-    answers.user = JSON.parse(answers.user);
-    writeToFile("README.md", generateMarkdown(answers));
-    console.log("Created file 'README.md'");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+async function init() {
+  // GET USERNAME AND GITHUB DATA
+  // GET OTHER ANSWERS
+  // https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
+  const data = async () => {
+    try {
+      let userData;
+      while (userData == undefined) {
+        const user = await inquirer.prompt({
+          type: "input",
+          name: "name",
+          message: "Enter a Github username:",
+        });
+        userData = await api.getUser(user.name);
+      }
+      const answers = await inquirer.prompt(questions);
+      answers.user = userData;
+      return answers;
+    } catch (err) {
+      console.log(chalk.red("Error"));
+    }
+  };
+  let a = await data();
+  console.log(a);
+  // writeToFile("README.md", generateMarkdown(data));
 }
 
 init();

@@ -1,5 +1,6 @@
 require("dotenv").config({ path: "../.env" });
 const axios = require("axios");
+const chalk = require("chalk");
 
 const api = {
   getUser(username) {
@@ -10,25 +11,25 @@ const api = {
       // https://github.com/motdotla/dotenv
       // https://stackoverflow.com/questions/44078900/github-api-fetching-user-email
       // https://www.youtube.com/watch?v=17UVejOw3zA
-      headers: { Authorization: "token " + token }
+      headers: { Authorization: "token " + token },
     };
-    return axios
-      .get(queryURL, config)
-      .then(function(res) {
-        // console.log(res.data);
+    const data = async () => {
+      try {
+        const res = await axios.get(queryURL, config);
         const user = {
           name: res.data.name,
           login: res.data.login,
           profile: res.data.html_url,
           profileImg: res.data.avatar_url,
-          email: res.data.email
+          email: res.data.email,
         };
-        return JSON.stringify(user);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+        return user;
+      } catch (err) {
+        console.log(chalk.red("Error: Please enter a valid Github username"));
+      }
+    };
+    return data();
+  },
 };
 
 module.exports = api;

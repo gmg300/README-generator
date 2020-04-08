@@ -7,8 +7,8 @@ function generateMarkdown(data) {
 
 
   ## Description
-  ${data.description}  
-  
+  ${data.description}
+
   
   ## Table of Contents
   * [Installation](#installation)
@@ -21,7 +21,9 @@ function generateMarkdown(data) {
   
   
   ## Installation
-  ${data.installation} [${data.title}](${data.link})
+  ${data.installation}
+    
+  [Live link](${data.link})
   
   
   ## Usage
