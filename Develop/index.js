@@ -156,7 +156,7 @@ const questions = [
 ];
 
 function writeToFile(fileName, data) {
-  const path = "markdown/" + fileName;
+  const path = "../Markdown/" + fileName;
   fs.writeFileSync(path, data);
   console.log(chalk.green("Created file 'README.md'"));
 }
